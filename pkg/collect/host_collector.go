@@ -50,6 +50,10 @@ func GetHostCollector(collector *troubleshootv1beta2.HostCollect) (HostCollector
 		return &CollectHostProcMounts{collector.ProcMounts}, true
 	case collector.Aio != nil:
 		return &CollectHostAio{collector.Aio}, true
+	case collector.PsGeneral != nil:
+		return &CollectHostPsGeneral{collector.PsGeneral}, true
+	case collector.PsThreads != nil:
+		return &CollectHostPsThreads{collector.PsThreads}, true
 	default:
 		return nil, false
 	}
