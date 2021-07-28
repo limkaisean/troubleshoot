@@ -73,6 +73,10 @@ type TCPConnect struct {
 	Timeout           string `json:"timeout,omitempty"`
 }
 
+type HostProcMounts struct {
+	HostCollectorMeta `json:",inline" yaml:",inline"`
+}
+
 // FilesystemPerformance benchmarks sequential write latency on a single file.
 // The optional background IOPS feature attempts to mimic real-world conditions by running read and
 // write workloads prior to and during benchmark execution.
@@ -140,6 +144,7 @@ type HostCollect struct {
 	FilesystemPerformance *FilesystemPerformance `json:"filesystemPerformance,omitempty" yaml:"filesystemPerformance,omitempty"`
 	Certificate           *Certificate           `json:"certificate,omitempty" yaml:"certificate,omitempty"`
 	HostServices          *HostServices          `json:"hostServices,omitempty" yaml:"hostServices,omitempty"`
+	ProcMounts            *HostProcMounts        `json:"procMounts,omitempty" yaml:"procMounts,omitempty"`
 }
 
 func (c *HostCollect) GetName() string {

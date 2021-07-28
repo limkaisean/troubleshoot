@@ -40,6 +40,8 @@ func GetHostCollector(collector *troubleshootv1beta2.HostCollect) (HostCollector
 		return &CollectHostCertificate{collector.Certificate}, true
 	case collector.HostServices != nil:
 		return &CollectHostServices{collector.HostServices}, true
+	case collector.HostProcMounts != nil:
+		return &CollectHostProcMounts{collector.HostProcMounts}, true
 	default:
 		return nil, false
 	}
