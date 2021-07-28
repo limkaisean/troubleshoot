@@ -55,13 +55,11 @@ func (c *CollectHostPsGeneral) Collect(progressChan chan<- interface{}) (map[str
 	}
 
 	return map[string][]byte{
-		"system/ps_general.json": b,
+		"ps-general": b,
 	}, nil
 }
 
-func collectPsGeneral() (map[string][]PsGeneral, error) {
-	psGeneral := make(map[string][]PsGeneral)
-
+func collectPsGeneral() ([]PsGeneral, error) {
 	cmd := exec.Command("ps", "-ewwo", "pid,uname,ppid,pgid,sid,sz,rssize,vsize,psr,c,bsdtime,nlwp,lstart,etimes,state,tname,args")
 	stdout, err := cmd.Output()
 	if err != nil {
@@ -100,7 +98,5 @@ func collectPsGeneral() (map[string][]PsGeneral, error) {
 		})
 	}
 
-	psGeneral["ps_general"] = data
-
-	return psGeneral, nil
+	return data, nil
 }

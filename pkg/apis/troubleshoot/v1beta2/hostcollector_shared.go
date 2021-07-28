@@ -85,6 +85,15 @@ type Aio struct {
 	HostCollectorMeta `json:",inline" yaml:",inline"`
 }
 
+type DiskFree struct {
+	HostCollectorMeta `json:",inline" yaml:",inline"`
+}
+
+type FileSpaceUsage struct {
+	HostCollectorMeta `json:",inline" yaml:",inline"`
+	Path              string `json:"path" yaml:"path"`
+}
+
 type PsGeneral struct {
 	HostCollectorMeta `json:",inline" yaml:",inline"`
 }
@@ -163,6 +172,8 @@ type HostCollect struct {
 	HostServices          *HostServices          `json:"hostServices,omitempty" yaml:"hostServices,omitempty"`
 	ProcMounts            *ProcMounts            `json:"procMounts,omitempty" yaml:"procMounts,omitempty"`
 	Aio                   *Aio                   `json:"aio,omitempty" yaml:"aio,omitempty"`
+	DiskFree              *DiskFree              `json:"diskFree,omitempty" yaml:"diskFree,omitempty"`
+	FileSpaceUsage        *FileSpaceUsage        `json:"fileSpaceUsage,omitempty" yaml:"fileSpaceUsage,omitempty"`
 	PsGeneral             *PsGeneral             `json:"psGeneral,omitempty" yaml:"psGeneral,omitempty"`
 	PsThreads             *PsThreads             `json:"psThreads,omitempty" yaml:"psThreads,omitempty"`
 }
