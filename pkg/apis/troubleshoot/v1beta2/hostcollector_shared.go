@@ -73,7 +73,7 @@ type TCPConnect struct {
 	Timeout           string `json:"timeout,omitempty"`
 }
 
-type HostProcMounts struct {
+type ProcMounts struct {
 	HostCollectorMeta `json:",inline" yaml:",inline"`
 }
 
@@ -144,7 +144,7 @@ type HostCollect struct {
 	FilesystemPerformance *FilesystemPerformance `json:"filesystemPerformance,omitempty" yaml:"filesystemPerformance,omitempty"`
 	Certificate           *Certificate           `json:"certificate,omitempty" yaml:"certificate,omitempty"`
 	HostServices          *HostServices          `json:"hostServices,omitempty" yaml:"hostServices,omitempty"`
-	ProcMounts            *HostProcMounts        `json:"procMounts,omitempty" yaml:"procMounts,omitempty"`
+	ProcMounts            *ProcMounts            `json:"procMounts,omitempty" yaml:"procMounts,omitempty"`
 }
 
 func (c *HostCollect) GetName() string {

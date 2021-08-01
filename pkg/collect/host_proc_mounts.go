@@ -19,7 +19,7 @@ type Mount struct {
 }
 
 type CollectHostProcMounts struct {
-	hostCollector *troubleshootv1beta2.HostProcMounts
+	hostCollector *troubleshootv1beta2.ProcMounts
 }
 
 func (c *CollectHostProcMounts) Title() string {
@@ -36,7 +36,7 @@ func (c *CollectHostProcMounts) Collect(progressChan chan<- interface{}) (map[st
 		return nil, errors.Wrap(err, "failed to read proc mounts")
 	}
 
-	b, err = json.Marshal(mounts)
+	b, err := json.Marshal(mounts)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to marshal proc mounts")
 	}
