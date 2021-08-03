@@ -37,7 +37,7 @@ func (c *CollectHostAio) Collect(progressChan chan<- interface{}) (map[string][]
 	}
 
 	return map[string][]byte{
-		"system/aio.json": b,
+		"aio": b,
 	}, nil
 }
 
