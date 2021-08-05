@@ -77,6 +77,10 @@ type ProcMounts struct {
 	HostCollectorMeta `json:",inline" yaml:",inline"`
 }
 
+type Aio struct {
+	HostCollectorMeta `json:",inline" yaml:",inline"`
+}
+
 // FilesystemPerformance benchmarks sequential write latency on a single file.
 // The optional background IOPS feature attempts to mimic real-world conditions by running read and
 // write workloads prior to and during benchmark execution.
@@ -145,6 +149,7 @@ type HostCollect struct {
 	Certificate           *Certificate           `json:"certificate,omitempty" yaml:"certificate,omitempty"`
 	HostServices          *HostServices          `json:"hostServices,omitempty" yaml:"hostServices,omitempty"`
 	ProcMounts            *ProcMounts            `json:"procMounts,omitempty" yaml:"procMounts,omitempty"`
+	Aio                   *Aio                   `json:"aio,omitempty" yaml:"aio,omitempty"`
 }
 
 func (c *HostCollect) GetName() string {
