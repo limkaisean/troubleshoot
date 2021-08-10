@@ -44,6 +44,8 @@ func GetHostCollector(collector *troubleshootv1beta2.HostCollect) (HostCollector
 		return &CollectHostProcMounts{collector.ProcMounts}, true
 	case collector.Aio != nil:
 		return &CollectHostAio{collector.Aio}, true
+	case collector.DiskFree != nil:
+		return &CollectHostDiskFree{collector.DiskFree}, true
 	default:
 		return nil, false
 	}
