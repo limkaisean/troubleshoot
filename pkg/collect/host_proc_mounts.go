@@ -42,11 +42,13 @@ func (c *CollectHostProcMounts) Collect(progressChan chan<- interface{}) (map[st
 	}
 
 	return map[string][]byte{
-		"/proc/mounts": b,
+		"system/proc_mounts.json": b,
 	}, nil
 }
 
-func collectInfo() ([]Mount, error) {
+func collectInfo() (map[string][]Mount, error) {
+	data := make(map[string][]Mount)
+
 	cmd := exec.Command("cat", "/proc/mounts")
 	stdout, err := cmd.Output()
 	if err != nil {
@@ -70,5 +72,7 @@ func collectInfo() ([]Mount, error) {
 		})
 	}
 
-	return mounts, nil
+	data["mounts"] = mounts
+
+	return data, nil
 }

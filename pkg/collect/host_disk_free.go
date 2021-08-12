@@ -45,11 +45,13 @@ func (c *CollectHostDiskFree) Collect(progressChan chan<- interface{}) (map[stri
 	}
 
 	return map[string][]byte{
-		"disk_free": b,
+		"system/disk_free.json": b,
 	}, nil
 }
 
-func collectDiskFree() ([]DiskFree, error) {
+func collectDiskFree() (map[string][]DiskFree, error) {
+	diskFree := make(map[string][]DiskFree)
+
 	cmd := exec.Command("df", "--print-type")
 	stdout, err := cmd.Output()
 	if err != nil {
@@ -77,5 +79,7 @@ func collectDiskFree() ([]DiskFree, error) {
 		})
 	}
 
-	return data, nil
+	diskFree["free_disk_space"] = data
+
+	return diskFree, nil
 }

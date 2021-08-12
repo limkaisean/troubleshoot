@@ -53,11 +53,13 @@ func (c *CollectHostPsThreads) Collect(progressChan chan<- interface{}) (map[str
 	}
 
 	return map[string][]byte{
-		"ps-threads": b,
+		"system/ps_threads.json": b,
 	}, nil
 }
 
-func collectPsThreads() ([]PsThreads, error) {
+func collectPsThreads() (map[string][]PsThreads, error) {
+	psThreads := make(map[string][]PsThreads)
+
 	cmd := exec.Command("ps", "-ejFwwL")
 	stdout, err := cmd.Output()
 	if err != nil {
@@ -92,5 +94,7 @@ func collectPsThreads() ([]PsThreads, error) {
 		})
 	}
 
-	return data, nil
+	psThreads["ps_threads"] = data
+
+	return psThreads, nil
 }

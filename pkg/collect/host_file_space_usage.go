@@ -40,11 +40,13 @@ func (c *CollectHostFileSpaceUsage) Collect(progressChan chan<- interface{}) (ma
 	}
 
 	return map[string][]byte{
-		"file_space_usage": b,
+		"system/file_space_usage.json": b,
 	}, nil
 }
 
-func collectFileSpaceUsage(input string) ([]FileSpaceUsage, error) {
+func collectFileSpaceUsage(input string) (map[string][]FileSpaceUsage, error) {
+	fileSpaceUsage := make(map[string][]FileSpaceUsage)
+
 	path := "."
 	if len(input) > 0 {
 		path = input
@@ -71,5 +73,7 @@ func collectFileSpaceUsage(input string) ([]FileSpaceUsage, error) {
 		})
 	}
 
-	return data, nil
+	fileSpaceUsage[path] = data
+
+	return fileSpaceUsage, nil
 }
