@@ -46,6 +46,8 @@ func GetHostCollector(collector *troubleshootv1beta2.HostCollect) (HostCollector
 		return &CollectHostAio{collector.Aio}, true
 	case collector.DiskFree != nil:
 		return &CollectHostDiskFree{collector.DiskFree}, true
+	case collector.FileSpaceUsage != nil:
+		return &CollectHostFileSpaceUsage{collector.FileSpaceUsage}, true
 	default:
 		return nil, false
 	}
