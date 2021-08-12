@@ -1559,8 +1559,8 @@ func (in *HostCollect) DeepCopyInto(out *HostCollect) {
 	if in.FileSpaceUsage != nil {
 		in, out := &in.FileSpaceUsage, &out.FileSpaceUsage
 		*out = new(FileSpaceUsage)
-    **out = **in
-  }
+		**out = **in
+	}
 	if in.PsGeneral != nil {
 		in, out := &in.PsGeneral, &out.PsGeneral
 		*out = new(PsGeneral)
