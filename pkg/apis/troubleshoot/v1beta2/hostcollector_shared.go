@@ -90,6 +90,14 @@ type FileSpaceUsage struct {
 	Path              string `json:"path" yaml:"path"`
 }
 
+type PsGeneral struct {
+	HostCollectorMeta `json:",inline" yaml:",inline"`
+}
+
+type PsThreads struct {
+	HostCollectorMeta `json:",inline" yaml:",inline"`
+}
+
 // FilesystemPerformance benchmarks sequential write latency on a single file.
 // The optional background IOPS feature attempts to mimic real-world conditions by running read and
 // write workloads prior to and during benchmark execution.
@@ -161,6 +169,8 @@ type HostCollect struct {
 	Aio                   *Aio                   `json:"aio,omitempty" yaml:"aio,omitempty"`
 	DiskFree              *DiskFree              `json:"diskFree,omitempty" yaml:"diskFree,omitempty"`
 	FileSpaceUsage        *FileSpaceUsage        `json:"fileSpaceUsage,omitempty" yaml:"fileSpaceUsage,omitempty"`
+	PsGeneral             *PsGeneral             `json:"psGeneral,omitempty" yaml:"psGeneral,omitempty"`
+	PsThreads             *PsThreads             `json:"psThreads,omitempty" yaml:"psThreads,omitempty"`
 }
 
 func (c *HostCollect) GetName() string {
