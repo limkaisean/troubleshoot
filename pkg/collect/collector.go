@@ -180,6 +180,7 @@ func (c *Collector) IsExcluded() bool {
 		if isExcludedResult {
 			return true
 		}
+
 	}
 	return false
 }
