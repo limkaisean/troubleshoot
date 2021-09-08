@@ -180,7 +180,14 @@ func (c *Collector) IsExcluded() bool {
 		if isExcludedResult {
 			return true
 		}
-	}
+	} else if c.Collect.StorageOS != nil {
+		isExcludedResult, err := isExcluded(c.Collect.StorageOS.Exclude)
+		if err != nil {
+			return true
+		}
+		if isExcludedResult {
+			return true
+		}
 	return false
 }
 
@@ -241,6 +248,8 @@ func (c *Collector) RunCollectorSync(clientConfig *rest.Config, client kubernete
 		result, err = Ceph(c, c.Collect.Ceph)
 	} else if c.Collect.Longhorn != nil {
 		result, err = Longhorn(c, c.Collect.Longhorn)
+	} else if c.Collect.StorageOS != nil {
+		result, err = StorageOS(c, c.Collect.StorageOS)
 	} else if c.Collect.RegistryImages != nil {
 		result, err = Registry(c, c.Collect.RegistryImages)
 	} else {

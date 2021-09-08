@@ -169,6 +169,11 @@ type Longhorn struct {
 	Timeout       string `json:"timeout,omitempty" yaml:"timeout,omitempty"`
 }
 
+type StorageOS struct {
+	CollectorMeta `json:",inline" yaml:",inline"`
+	Timeout       string `json:"timeout,omitempty" yaml:"timeout,omitempty"`
+}
+
 type RegistryImages struct {
 	CollectorMeta    `json:",inline" yaml:",inline"`
 	Images           []string          `json:"images" yaml:"images"`
@@ -194,6 +199,7 @@ type Collect struct {
 	Collectd         *Collectd         `json:"collectd,omitempty" yaml:"collectd,omitempty"`
 	Ceph             *Ceph             `json:"ceph,omitempty" yaml:"ceph,omitempty"`
 	Longhorn         *Longhorn         `json:"longhorn,omitempty" yaml:"longhorn,omitempty"`
+	StorageOS        *StorageOS        `json:"storageos,omitempty" yaml:"storageos,omitempty"`
 	RegistryImages   *RegistryImages   `json:"registryImages,omitempty" yaml:"registryImages,omitempty"`
 }
 
@@ -447,6 +453,10 @@ func (c *Collect) GetName() string {
 	if c.Longhorn != nil {
 		collector = "longhorn"
 		name = c.Longhorn.CollectorName
+	}
+	if c.StorageOS != nil {
+		collector = "storageos"
+		name = c.StorageOS.CollectorName
 	}
 	if c.RegistryImages != nil {
 		collector = "registry-images"

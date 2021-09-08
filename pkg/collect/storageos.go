@@ -1,47 +1,47 @@
-package main
+package collect
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 
+	troubleshootv1beta2 "github.com/replicatedhq/troubleshoot/pkg/apis/troubleshoot/v1beta2"
 	apiclient "github.com/replicatedhq/troubleshoot/pkg/storageos"
 	api "github.com/storageos/go-api/v2"
 )
 
-const (
-	DefaultStorageOSNamespace = "storageos"
-)
+func StorageOS(c *Collector, storageosCollector *troubleshootv1beta2.StorageOS) (map[string][]byte, error) {
+	result := map[string][]byte{}
 
-func main() {
-	// ctx := context.TODO()
+	ctx := context.TODO()
 	username := "storageos"
 	password := "storageos"
 	apiEndpoint := "127.0.0.1:5705"
 
 	ctx, storageos, err := apiclient.New(username, password, apiEndpoint)
 	if err != nil {
-		fmt.Print(err)
+		return nil, err
 	}
 
 	namespaces, err := getNamespaces(storageos, ctx)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
-	fmt.Println(string(namespaces))
+	result["namespaces"] = namespaces
 
 	cluster, err := getCluster(storageos, ctx)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
-	fmt.Println(string(cluster))
+	result["cluster"] = cluster
 
 	volumes, err := getVolumes(storageos, ctx)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
-	fmt.Println(string(volumes))
+	result["volumes"] = volumes
 
+	return result, nil
 }
 
 func getNamespaces(storageos *api.APIClient, ctx context.Context) ([]byte, error) {
