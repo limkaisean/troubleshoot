@@ -1,6 +1,7 @@
 package collect
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"reflect"
@@ -8,6 +9,9 @@ import (
 	"strings"
 
 	troubleshootv1beta2 "github.com/replicatedhq/troubleshoot/pkg/apis/troubleshoot/v1beta2"
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
 )
 
 func DeterministicIDForCollector(collector *troubleshootv1beta2.Collect) string {
@@ -102,4 +106,33 @@ func marshalNonNil(obj interface{}) ([]byte, error) {
 	}
 
 	return json.MarshalIndent(obj, "", "  ")
+}
+
+// listNodesNamesInSelector returns a list of node names matching the label
+// selector,
+func listNodesNamesInSelector(ctx context.Context, client *kubernetes.Clientset, selector string) ([]string, error) {
+	var names []string
+	nodes, err := listNodesInSelector(ctx, client, selector)
+	if err != nil {
+		return nil, err
+	}
+	for _, node := range nodes {
+		names = append(names, node.GetName())
+	}
+	return names, nil
+}
+
+// listNodesInSelector returns a list of node names matching the label
+// selector,
+func listNodesInSelector(ctx context.Context, client *kubernetes.Clientset, selector string) ([]corev1.Node, error) {
+	listOptions := metav1.ListOptions{
+		LabelSelector: selector,
+	}
+
+	nodes, err := client.CoreV1().Nodes().List(ctx, listOptions)
+	if err != nil {
+		return nil, fmt.Errorf("Can't get the list of nodes, got: %w", err)
+	}
+
+	return nodes.Items, nil
 }
